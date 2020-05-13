@@ -1,0 +1,18 @@
+{
+  "name": "offline",
+  "version": "1.0.0",
+  "description": "",
+  "main": "handler.js",
+  "scripts": {
+    "start": "set IS_OFFLINE=true & set SLS_DEBUG=* & nodemon --exec serverless offline start"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "serverless-offline": "^6.1.5"
+  },
+  "dependencies": {
+    "aws-sdk": "^2.673.0"
+  }
+}
