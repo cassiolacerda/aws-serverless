@@ -1,0 +1,28 @@
+{
+  "name": "express-dynamodb",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "set SLS_DEBUG=*& set IS_OFFLINE=true& nodemon --exec npm run nodemon-dev",
+    "deploy-staging": "set SLS_DEBUG=*& serverless deploy --stage staging",
+    "deploy-production": "set SLS_DEBUG=*& serverless deploy --stage production",
+    "nodemon-dev": "node ./src/env.development/build.js | serverless offline start --stage development"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "app-root-path": "^3.0.0",
+    "aws-sdk": "^2.676.0",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "serverless-dotenv-plugin": "^2.4.2",
+    "serverless-http": "^2.4.1"
+  },
+  "devDependencies": {
+    "serverless-dynamodb-local": "^0.2.30",
+    "serverless-offline": "^6.1.5",
+    "serverless-s3-local": "^0.6.1"
+  }
+}

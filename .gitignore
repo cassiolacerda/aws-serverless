@@ -5,14 +5,17 @@
 # ignore packages installed by npm
 node_modules
 
-# ignore environment files
-.env
+# ignore data files
+data
 
 # ignore log files
 logs
 
 # ignore data files
-data
+src
+
+# ignore environment files
+.env
 
 # Serverless directories
 .serverless

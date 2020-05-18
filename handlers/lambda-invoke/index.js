@@ -1,11 +1,10 @@
 "use strict";
 
-const { parseResponseMessage } = require("./libs/utils");
-
 const AWS = require("aws-sdk");
 
-module.exports.hello = async (event) => {
-  console.log(process.env);
+const parseResponseMessage = require("./helpers/parseResponseMessage");
+
+module.exports.response = async (event) => {
   return {
     statusCode: 200,
     body: JSON.stringify(
@@ -19,9 +18,7 @@ module.exports.hello = async (event) => {
   };
 };
 
-module.exports.invocation = async (event) => {
-  console.log(process.env);
-
+module.exports.request = async (event) => {
   const params = process.env.IS_OFFLINE
     ? {
         endpoint: "http://localhost:3002",
@@ -33,7 +30,7 @@ module.exports.invocation = async (event) => {
   try {
     const response = await lambda
       .invoke({
-        FunctionName: "offline-dev-hello",
+        FunctionName: "express-dynamodb-development-lambdaResponse",
       })
       .promise();
 

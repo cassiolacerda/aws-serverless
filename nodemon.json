@@ -1,5 +1,5 @@
 {
   "ext": "js,json,yml",
-  "verbose": true,
+  "watch": ".env",
   "ignore": ["node_modules/*", "logs/*"]
 }
