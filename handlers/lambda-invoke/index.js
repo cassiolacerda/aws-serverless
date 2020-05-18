@@ -21,7 +21,7 @@ module.exports.response = async (event) => {
 module.exports.request = async (event) => {
   const params = process.env.IS_OFFLINE
     ? {
-        endpoint: "http://localhost:3002",
+        endpoint: `http://localhost:${process.env.DB_PORT}`,
       }
     : {};
 
@@ -30,7 +30,7 @@ module.exports.request = async (event) => {
   try {
     const response = await lambda
       .invoke({
-        FunctionName: "express-dynamodb-development-lambdaResponse",
+        FunctionName: `${process.env.SERVICE}-${event.requestContext.stage}-lambdaResponse`,
       })
       .promise();
 

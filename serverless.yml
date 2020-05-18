@@ -11,7 +11,7 @@
 #
 # Happy Coding!
 
-service: express-dynamodb
+service: aws-labs
 
 # app and org for use with dashboard.serverless.com
 #app: your-app-name
@@ -42,8 +42,10 @@ provider:
         - s3:*
       Resource: "*"
   environment:
+    SERVICE: ${self:service}
     DB_TABLE_USERS: ${self:custom.tables.users}
     S3_BUCKET: ${self:custom.bucket}
+    DB_PORT: ${self:custom.dynamodb.start.port}
     S3_PORT: ${self:custom.s3.port}
 
   # you can add statements to the Lambda function's IAM Role here
@@ -155,10 +157,10 @@ resources:
         ProvisionedThroughput:
           ReadCapacityUnits: 1
           WriteCapacityUnits: 1
-    S3BucketData:
-      Type: AWS::S3::Bucket
-      Properties:
-        BucketName: ${self:custom.bucket}
+#    S3BucketData:
+#      Type: AWS::S3::Bucket
+#      Properties:
+#        BucketName: ${self:custom.bucket}
 
 #  Outputs:
 #     NewOutput:
@@ -173,7 +175,7 @@ custom:
     production: serverless-admin
   tables:
     users: "serverless-${self:service}-${self:provider.stage}-users"
-  bucket: serverless-${self:service}-${self:provider.stage}
+  bucket: cassiolacerda-serverless-${self:service}-${self:provider.stage}
   dynamodb:
     start:
       port: 8000
