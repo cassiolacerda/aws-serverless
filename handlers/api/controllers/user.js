@@ -3,7 +3,7 @@ const AWS = require("aws-sdk");
 const params = process.env.IS_OFFLINE
   ? {
       region: "localhost",
-      endpoint: new AWS.Endpoint(`http://localhost:8000`),
+      endpoint: new AWS.Endpoint(`http://localhost:${process.env.DB_PORT}`),
     }
   : {};
 const dynamoDb = new AWS.DynamoDB.DocumentClient(params);

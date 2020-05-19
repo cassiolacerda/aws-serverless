@@ -21,7 +21,7 @@ module.exports.response = async (event) => {
 module.exports.request = async (event) => {
   const params = process.env.IS_OFFLINE
     ? {
-        endpoint: `http://localhost:${process.env.DB_PORT}`,
+        endpoint: `http://localhost:3002`,
       }
     : {};
 

@@ -44,8 +44,6 @@ module.exports.webhook = async (event) => {
       }
     );
 
-  console.log(response.message);
-
   return {
     statusCode: response.statusCode,
     body: JSON.stringify(
