@@ -1,0 +1,6 @@
+{
+  "verbose": true,
+  "ext": "js,json,yml",
+  "watch": ".env",
+  "ignore": ["node_modules/*", "logs/*"]
+}
