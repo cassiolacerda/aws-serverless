@@ -1,0 +1,11 @@
+component: website
+name: landing-page
+stage: staging
+
+inputs:
+  region: us-east-2
+  bucketName: cassiolacerda-serverless-aws-frontend
+  src:
+    src: ./src
+    hook: npm run build
+    dist: ./dist

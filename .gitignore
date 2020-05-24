@@ -11,11 +11,9 @@ data
 # ignore log files
 logs
 
-# ignore data files
-src
-
 # ignore environment files
-.env
+.env*
+!.env.example
 
 # Serverless directories
 .serverless
