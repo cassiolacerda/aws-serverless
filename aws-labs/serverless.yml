@@ -109,37 +109,24 @@ functions:
       - http:
           path: s3/webhook
           method: get
+  cognitoRequest:
+    handler: handlers/cognito/index.request
+    events:
+      - http:
+          path: cognito/request
+          method: get
+          authorizer:
+            type: COGNITO_USER_POOLS
+            authorizerId:
+              Ref: ApiGatewayAuthorizer
 
-#      - schedule: rate(10 minutes)
-#      - sns: greeter-topic
-#      - stream: arn:aws:dynamodb:region:XXXXXX:table/foo/stream/1970-01-01T00:00:00.000
-#      - alexaSkill: amzn1.ask.skill.xx-xx-xx-xx
-#      - alexaSmartHome: amzn1.ask.skill.xx-xx-xx-xx
-#      - iot:
-#          sql: "SELECT * FROM 'some_topic'"
-#      - cloudwatchEvent:
-#          event:
-#            source:
-#              - "aws.ec2"
-#            detail-type:
-#              - "EC2 Instance State-change Notification"
-#            detail:
-#              state:
-#                - pending
-#      - cloudwatchLog: '/aws/lambda/hello'
-#      - cognitoUserPool:
-#          pool: MyUserPool
-#          trigger: PreSignUp
-#      - alb:
-#          listenerArn: arn:aws:elasticloadbalancing:us-east-1:XXXXXX:listener/app/my-load-balancer/50dc6c495c0c9188/
-#          priority: 1
-#          conditions:
-#            host: example.com
-#            path: /hello
-
-#    Define function environment variables here
-#    environment:
-#      variable2: value2
+#      tutorial: https://medium.com/@Da_vidgf/using-cognito-for-users-management-in-your-serverless-application-1695fec9e225
+#      url-template: https://<your_domain>/login?response_type=token&client_id=<your_app_client_id>&redirect_uri=<your_callback_url>
+#      url: https://ad70oo18.auth.us-east-2.amazoncognito.com/login?response_type=token&client_id=48g22b2apgu18rfkqtjhs9tiis&redirect_uri=http://localhost:3000
+#      user: <email>
+#      pass: W18R76YT74
+#      id_token (response): eyJraWQiOiJ4bFwvQzVJXC9BNk9PZkxxcmVmb2VrTjA5NG1nc3dkYmVldkdwZmlIMDJzU3M9IiwiYWxnIjoiUlMyNTYifQ.eyJhdF9oYXNoIjoieEF0bnh4ZzBDbG9tU0ZSanM5X1V3ZyIsInN1YiI6IjY0YTQ5MmViLWQwZmYtNGI5MS1iOGQ4LThjOTgyZGFhZmUwMyIsImF1ZCI6IjQ4ZzIyYjJhcGd1MThyZmtxdGpoczl0aWlzIiwiZW1haWxfdmVyaWZpZWQiOmZhbHNlLCJldmVudF9pZCI6ImM2MDBlYjE3LTcyN2MtNDRiMC1hMGQzLTNjNmE0MGYxZjQ4ZCIsInRva2VuX3VzZSI6ImlkIiwiYXV0aF90aW1lIjoxNTkxNDc5MDIzLCJpc3MiOiJodHRwczpcL1wvY29nbml0by1pZHAudXMtZWFzdC0yLmFtYXpvbmF3cy5jb21cL3VzLWVhc3QtMl80YVBxQ2RpN0oiLCJjb2duaXRvOnVzZXJuYW1lIjoiNjRhNDkyZWItZDBmZi00YjkxLWI4ZDgtOGM5ODJkYWFmZTAzIiwiZXhwIjoxNTkxNDgyNjIzLCJpYXQiOjE1OTE0NzkwMjMsImVtYWlsIjoiY2Fzc2lvbGFjZXJkYS53ZWJAZ21haWwuY29tIn0.gs5xbKmZn3y30OPfXKsf_WDdeNQ8whAuWVAZthpSa2DzoyHfGXTfbRokPezWGNSnVUIRlwvwefurztBdOB0TYgZT7l2npTroX4xzaaCf-fJPJRlE11r-ynZmhBw0yNTSysTGoHaUCUx0hT7Y72DqNKXsx7mqba7eEtenJA7ArfipTXzx7FNLBJEK1loumJBWPlOegHRh8YSURWK6Fb5dERj0pC3dk_QPVrmbNdN8ybTDSYmenEvpPyoBFB4hqccQrPsnfj06RTsCRO8U09LlpaVsIQpGUreFtLxW4SI27qxnm7_9l2bDC3z6gd6eI_T5MROFxJQsz7j1oivk6s29Cw
+#      access_token (response): eyJraWQiOiJhU3lHRFhPaDMrS0FtRFZkMm1vU2l0SlQ2MUJvWmx3c3hLaDQ4a0NkTmVnPSIsImFsZyI6IlJTMjU2In0.eyJzdWIiOiI2NGE0OTJlYi1kMGZmLTRiOTEtYjhkOC04Yzk4MmRhYWZlMDMiLCJldmVudF9pZCI6ImM2MDBlYjE3LTcyN2MtNDRiMC1hMGQzLTNjNmE0MGYxZjQ4ZCIsInRva2VuX3VzZSI6ImFjY2VzcyIsInNjb3BlIjoiYXdzLmNvZ25pdG8uc2lnbmluLnVzZXIuYWRtaW4gcGhvbmUgb3BlbmlkIHByb2ZpbGUgZW1haWwiLCJhdXRoX3RpbWUiOjE1OTE0NzkwMjMsImlzcyI6Imh0dHBzOlwvXC9jb2duaXRvLWlkcC51cy1lYXN0LTIuYW1hem9uYXdzLmNvbVwvdXMtZWFzdC0yXzRhUHFDZGk3SiIsImV4cCI6MTU5MTQ4MjYyMywiaWF0IjoxNTkxNDc5MDIzLCJ2ZXJzaW9uIjoyLCJqdGkiOiIzZGJhNjdjMC02YmNhLTQ0YTEtYWM4My00MzY5MWVjMTMyZmIiLCJjbGllbnRfaWQiOiI0OGcyMmIyYXBndTE4cmZrcXRqaHM5dGlpcyIsInVzZXJuYW1lIjoiNjRhNDkyZWItZDBmZi00YjkxLWI4ZDgtOGM5ODJkYWFmZTAzIn0.BHjlZMnds_j7wh7zkBCbBux85PNPdg7-s_WqBN7SKeFbGypktpobYJYjjY9sh3KaxfBU16RaI47e9YfyrM7OP9Wudp9HWhRz1DfAmhjx0cMbcnbMZVP9I1vkC-8wwM0tqYiK8Z8RZaOnAu3lAPpG0bNVyvLzZW7qNDazBmMSCfiMrqFCMtcgC1N4xbMwUe9ZwKnECcnAh4CisUHzw53kz9suvXcW-vn_lR3J-d8cmHF2_wMDEFemll-KfiipFMul5kVaGIn49ZQWrZ2lvtTmXHSMoKZD4a3wzWkeh0D9MGrvFgdj74Wkh5hTH4zdGXjPGX3Wark3eaHHdXnBUOfVSQ
 
 # you can add CloudFormation resource templates here
 resources:
@@ -157,6 +144,40 @@ resources:
         ProvisionedThroughput:
           ReadCapacityUnits: 1
           WriteCapacityUnits: 1
+    ApiGatewayAuthorizer:
+      DependsOn:
+        - ApiGatewayRestApi
+      Type: AWS::ApiGateway::Authorizer
+      Properties:
+        Name: cognito-authorizer
+        IdentitySource: method.request.header.Authorization
+        RestApiId:
+          Ref: ApiGatewayRestApi
+        Type: COGNITO_USER_POOLS
+        ProviderARNs:
+          - Fn::GetAtt: [CognitoUserPool, Arn]
+    CognitoUserPool:
+      Type: AWS::Cognito::UserPool
+      Properties:
+        MfaConfiguration: OFF
+        UserPoolName: ${self:custom.cognito.userPoolName}
+        UsernameAttributes:
+          - email
+        Policies:
+          PasswordPolicy:
+            MinimumLength: 6
+            RequireLowercase: False
+            RequireNumbers: True
+            RequireSymbols: False
+            RequireUppercase: True
+    CognitoUserPoolClient:
+      Type: AWS::Cognito::UserPoolClient
+      Properties:
+        ClientName: ${self:custom.cognito.userPoolClientName}
+        GenerateSecret: False
+        UserPoolId:
+          Ref: CognitoUserPool
+
 #    S3BucketData:
 #      Type: AWS::S3::Bucket
 #      Properties:
@@ -175,6 +196,9 @@ custom:
     production: serverless-admin
   tables:
     users: "serverless-${self:service}-${self:provider.stage}-users"
+  cognito:
+    userPoolName: "serverless-${self:service}-${self:provider.stage}-users"
+    userPoolClientName: "serverless-${self:service}-${self:provider.stage}-users-client"
   bucket: cassiolacerda-serverless-${self:service}-${self:provider.stage}
   dynamodb:
     start:
